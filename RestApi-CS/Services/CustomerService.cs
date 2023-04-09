@@ -20,8 +20,8 @@ public class CustomerService
 
     async public Task<DataTable> Get()
     {
-        JsonNode jsonNode = await useRandomUserApi("http://randomuser.me/api/?results=2&gender=male");
-        Console.WriteLine(jsonNode.ToString());
+        //JsonNode jsonNode = await useRandomUserApi("http://randomuser.me/api/?results=2&gender=male");
+        //Console.WriteLine(jsonNode.ToString());
         SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Customer", con);
         DataTable dt = new DataTable();
         da.Fill(dt);
@@ -38,23 +38,27 @@ public class CustomerService
         return i;
     }
 
-    async public Task<int> Put(int id, JsonElement value)
+    public void Put(int id, JsonElement value)
     {
         Customer cus = JsonConvert.DeserializeObject<Customer>(value.ToString());
         SqlCommand cmd = new SqlCommand("UPDATE Customer SET Name = '" + cus.name + "' WHERE ID = '" + id + "' ", con);
         con.Open();
-        int i = cmd.ExecuteNonQuery();
+        int querySuccess = cmd.ExecuteNonQuery();
         con.Close();
-        return i;
+        if(querySuccess == 0)
+            throw new Exception("ID doesn't exist");
+        
     }
 
-    async public Task<int> Delete(int id)
+    public void Delete(int id)
     {
         SqlCommand cmd = new SqlCommand("DELETE FROM Customer WHERE ID = '" + id + "' ", con);
         con.Open();
-        int i = cmd.ExecuteNonQuery();
+        int querySuccess = cmd.ExecuteNonQuery();
         con.Close();
-        return i;
+        if (querySuccess == 0)
+            throw new Exception("ID doesn't exist");
+        
     }
 
     async private Task<JsonNode> useRandomUserApi(string url)

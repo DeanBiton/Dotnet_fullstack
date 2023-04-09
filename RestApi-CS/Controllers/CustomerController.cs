@@ -22,41 +22,71 @@ public class CustomerController : ControllerBase
     [HttpGet("")]
     async public Task<IActionResult> Get()
     {
-        DataTable dt = await _customerService.Get();
-        if (dt.Rows.Count > 0)
-            return Ok(JsonConvert.SerializeObject(dt));
-        else
-            return NotFound();
+        try
+        {
+            DataTable dt = await _customerService.Get();
+            if (dt.Rows.Count > 0)
+                return Ok(JsonConvert.SerializeObject(dt));
+            else
+                return NotFound();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
     [HttpPost("")]
     async public Task<IActionResult> Post([FromBody] JsonElement value)
     {
-        int querySuccess = await _customerService.Post(value);
-        if (querySuccess == 1)
-            return Ok("Record inserted with the value as " + value);
-        else
-            return Ok("Try again. No data inserted");
+        try
+        {
+            string msg = String.Empty;
+            int querySuccess = await _customerService.Post(value);
+            if (querySuccess == 1)
+                msg = "Record inserted with the value as " + value;
+            else
+                msg = "Try again. No data inserted";
+
+            return Ok(msg);
+        }
+        catch (Exception ex) 
+        {
+            return StatusCode(404, ex.Message);
+        }
+        
     }
 
     [HttpPut("{id}")]
     async public Task<IActionResult> Put(int id, [FromBody] JsonElement value)
     {
-        int querySuccess = await _customerService.Put(id, value);
-        if (querySuccess == 1)
-            return Ok("Record updated with the value as " + value + "\nand id as " + id);
-        else
-            return Ok("Try again. No data updated");
+        try
+        {
+            string msg = String.Empty;
+            _customerService.Put(id, value);
+            msg = "Record updated with the value as " + value + "\nand id as " + id;
+            return Ok(msg);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(404, ex.Message);
+        }
     }
 
     [HttpDelete("{id}")]
     async public Task<IActionResult> Delete(int id)
     {
-        int querySuccess = await _customerService.Delete(id);
-        if (querySuccess == 1)
-            return Ok("Record deleted with the id as " + id);
-        else
-            return Ok("Try again. No data deleted");
+        try
+        {
+            string msg = String.Empty;
+            _customerService.Delete(id);
+            msg = "Record deleted with the id as " + id;
+            return Ok(msg);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(404, ex.Message);
+        }
     }
 }
 

@@ -23,6 +23,7 @@ namespace WpfApp
     public partial class MainWindow : Window
     {
         HttpClient client = new HttpClient();
+        List<Customer> customers;
 
         public MainWindow()
         {
@@ -54,8 +55,8 @@ namespace WpfApp
             Console.WriteLine(response);
             var json = JsonConvert.DeserializeObject<string>(response);
             datagrid.Columns.Clear();
-            List<Customer> all_date = JsonConvert.DeserializeObject<List<Customer>>(json);
-            datagrid.ItemsSource = all_date;
+            customers = JsonConvert.DeserializeObject<List<Customer>>(json);
+            datagrid.ItemsSource = customers;
         }
 
         private void LoadBtn_Click(object sender, RoutedEventArgs e)
@@ -72,32 +73,65 @@ namespace WpfApp
 
         private async void InsertBtn_Click(object sender, RoutedEventArgs e)
         {
+            msg_txt.Text = "";
             await client.PostAsJsonAsync("", createCustomer());
             LoadData();
         }
 
         private async void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
+            msg_txt.Text = "";
             int id;
-            if (int.TryParse(id_txt.Text, out id))
+            if (validateID() && int.TryParse(id_txt.Text, out id))
             {
                 string url = string.Format("{0}", id);
                 await client.PutAsJsonAsync(url, createCustomer());
+                LoadData();
             }
 
-            LoadData();
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
+            msg_txt.Text = "";
             int id;
-            if (int.TryParse(id_txt.Text, out id))
+            if (validateID() && int.TryParse(id_txt.Text, out id))
             {
                 string url = string.Format("{0}", id);
                 await client.DeleteAsync(url);
+                LoadData();
             }
+        }
 
-            LoadData();
+        // validations
+        private bool validateID()
+        {
+            bool valid = true;
+            int id;
+            if (!int.TryParse(id_txt.Text, out id))
+            {
+                valid = false;
+                msg_txt.Text = "ID is not an integer";
+            }
+            else
+            {
+                bool found = false;
+                foreach (Customer customer in customers)
+                {
+                    if (customer.ID == id)
+                    { 
+                        found = true; 
+                        break; 
+                    }
+                }
+
+                if(!found)
+                {
+                    valid = false;
+                    msg_txt.Text = "ID does not exists";
+                }
+            }
+            return valid;
         }
     }
 }
