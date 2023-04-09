@@ -30,7 +30,7 @@ public class CustomerService
         return dt;
     }
 
-    async public Task<int> Post(JsonElement value)
+    public int Post(JsonElement value)
     {
         Customer cus = JsonConvert.DeserializeObject<Customer>(value.ToString());
         SqlCommand cmd = new SqlCommand("Insert into Customer(Name) VALUES('" + cus.name + "')", con);

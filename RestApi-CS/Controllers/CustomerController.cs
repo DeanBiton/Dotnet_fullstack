@@ -37,12 +37,12 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost("")]
-    async public Task<IActionResult> Post([FromBody] JsonElement value)
+    public IActionResult Post([FromBody] JsonElement value)
     {
         try
         {
             string msg = String.Empty;
-            int querySuccess = await _customerService.Post(value);
+            int querySuccess = _customerService.Post(value);
             if (querySuccess == 1)
                 msg = "Record inserted with the value as " + value;
             else
@@ -58,7 +58,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    async public Task<IActionResult> Put(int id, [FromBody] JsonElement value)
+    public IActionResult Put(int id, [FromBody] JsonElement value)
     {
         try
         {
@@ -74,7 +74,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    async public Task<IActionResult> Delete(int id)
+    public IActionResult Delete(int id)
     {
         try
         {
