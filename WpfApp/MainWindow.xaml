@@ -24,5 +24,6 @@
         <Button x:Name="LoadBtn" Content="Load" HorizontalAlignment="Left" Margin="264,217,0,0" VerticalAlignment="Top" Height="30" Width="504" FontSize="16" Click="LoadBtn_Click"/>
         <Label Content="ID" HorizontalAlignment="Left" Margin="265,280,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="id_txt" HorizontalAlignment="Left" Margin="310,284,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="458" Height="22"/>
+        <TextBox x:Name="msg_txt" HorizontalAlignment="Left" Margin="108,381,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="607" Height="43"/>
     </Grid>
 </Window>
