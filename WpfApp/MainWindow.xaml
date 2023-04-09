@@ -1,0 +1,28 @@
+﻿<Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Label Content="CRUD C#" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="City" HorizontalAlignment="Left" Margin="27,178,0,0" VerticalAlignment="Top"/>
+        <Label Content="Gender" HorizontalAlignment="Left" Margin="27,138,0,0" VerticalAlignment="Top"/>
+        <Label Content="Age" HorizontalAlignment="Left" Margin="27,98,0,0" VerticalAlignment="Top"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="27,58,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="name_txt" HorizontalAlignment="Left" Margin="107,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="age_txt" HorizontalAlignment="Left" Margin="107,102,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="gender_txt" HorizontalAlignment="Left" Margin="107,142,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="city_txt" HorizontalAlignment="Left" Margin="107,182,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <DataGrid x:Name="datagrid" Height="NaN" Margin="264,62,32,230" Width="NaN"/>
+        <Button x:Name="InsertBtn" Content="Insert" HorizontalAlignment="Left" Margin="108,324,0,0" VerticalAlignment="Top" Height="40" Width="120" FontSize="16" Click="InsertBtn_Click"/>
+        <Button x:Name="UpdateBtn" Content="Update" HorizontalAlignment="Left" Margin="265,324,0,0" VerticalAlignment="Top" Height="40" Width="120" FontSize="16" Click="UpdateBtn_Click"/>
+        <Button x:Name="DeleteBtn" Content="Delete" HorizontalAlignment="Left" Margin="428,324,0,0" VerticalAlignment="Top" Height="40" Width="120" FontSize="16" Click="DeleteBtn_Click"/>
+        <Button x:Name="ClearDataBtn" Content="Clear" HorizontalAlignment="Left" Margin="595,324,0,0" VerticalAlignment="Top" Height="40" Width="120" FontSize="16" Click="ClearDataBtn_Click"/>
+        <Button x:Name="LoadBtn" Content="Load" HorizontalAlignment="Left" Margin="264,217,0,0" VerticalAlignment="Top" Height="30" Width="504" FontSize="16" Click="LoadBtn_Click"/>
+        <Label Content="ID" HorizontalAlignment="Left" Margin="265,280,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="id_txt" HorizontalAlignment="Left" Margin="310,284,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="458" Height="22"/>
+    </Grid>
+</Window>
