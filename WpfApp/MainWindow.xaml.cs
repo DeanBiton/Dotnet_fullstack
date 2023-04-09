@@ -68,6 +68,7 @@ namespace WpfApp
         {
             Customer customer = new Customer();
             customer.Name = name_txt.Text;
+            customer.Birthday = age_txt.Text;
             return customer;
         }
 

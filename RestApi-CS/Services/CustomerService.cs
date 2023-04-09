@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using RestAPI.Models;
 using Newtonsoft.Json;
+using System.Formats.Asn1;
+using System.Reflection;
 
 namespace RestAPI.Services;
 
@@ -33,7 +35,8 @@ public class CustomerService
     public int Post(JsonElement value)
     {
         Customer cus = JsonConvert.DeserializeObject<Customer>(value.ToString());
-        SqlCommand cmd = new SqlCommand("Insert into Customer(Name) VALUES('" + cus.name + "')", con);
+        string command = string.Format("Insert into Customer({0}) VALUES({1})", Customer.getFieldNames(), cus.getFieldsString());
+        SqlCommand cmd = new SqlCommand(command, con);
         con.Open();
         int i = cmd.ExecuteNonQuery();
         con.Close();
@@ -43,13 +46,12 @@ public class CustomerService
     public void Put(int id, JsonElement value)
     {
         Customer cus = JsonConvert.DeserializeObject<Customer>(value.ToString());
-        SqlCommand cmd = new SqlCommand("UPDATE Customer SET Name = '" + cus.name + "' WHERE ID = '" + id + "' ", con);
+        SqlCommand cmd = new SqlCommand("UPDATE Customer SET Name = '" + cus.name + "', Birthday = '" + cus.birthday + "' WHERE ID = '" + id + "' ", con);
         con.Open();
         int querySuccess = cmd.ExecuteNonQuery();
         con.Close();
         if(querySuccess == 0)
             throw new Exception("ID doesn't exist");
-        
     }
 
     public void Delete(int id)
@@ -60,7 +62,6 @@ public class CustomerService
         con.Close();
         if (querySuccess == 0)
             throw new Exception("ID doesn't exist");
-        
     }
 
     async private Task<JsonNode> useRandomUserApi(string url)
