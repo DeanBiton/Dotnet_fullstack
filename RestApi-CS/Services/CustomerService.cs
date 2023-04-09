@@ -11,11 +11,13 @@ public class CustomerService
 {
     SqlConnection con;
     private readonly HttpClient client;
+    string serverName = "DESKTOP-5R5EJ4F";
+    string databaseName = "Final";
 
     public CustomerService()
     {
         client = new HttpClient();
-        con = new SqlConnection("server=DESKTOP-5R5EJ4F; database=Final; Integrated Security=True;");
+        con = new SqlConnection(string.Format("server={0}; database={1}; Integrated Security=True;", serverName, databaseName));
     }
 
     async public Task<DataTable> Get()
